@@ -93,6 +93,3 @@ def synataxValidator(exp:str):
         print("Unclosed parantheses found")
     elif depth < 0:
         print("Closed an unopened parantheses")
-
-
-synataxValidator("(a|b & (~c)) ^ d")
