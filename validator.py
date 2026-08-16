@@ -1,32 +1,27 @@
-__import__('os').system('cls')
-
-
-
-
 class TokenData():
-    def __init__(self, token):
-        self.token = token
+    def __init__(self, char):   
+        self.char = char
         self.nextTokenExpected = []
 
-        if self.token in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']:
+        if self.char in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']:
             self.tokenType = "VARIABLE"
             self.nextTokenExpected = ["BINARY_OPERATOR", "RPAREN", "END"]
-        elif self.token in ['^', '&', '|']:
+        elif self.char in ['^', '&', '|']:
             self.tokenType = "BINARY_OPERATOR"
             self.nextTokenExpected = ["VARIABLE", "LPAREN", "UNARY_OPERATOR"]
-        elif self.token == "~":
+        elif self.char == "~":
             self.tokenType = "UNARY_OPERATOR"
             self.nextTokenExpected = ["VARIABLE", "UNARY_OPERATOR", "LPAREN"]
-        elif self.token == "(":
+        elif self.char == "(":
             self.tokenType = "LPAREN"
             self.nextTokenExpected = ["VARIABLE", "LPAREN", "UNARY_OPERATOR"]
-        elif self.token == ")":
+        elif self.char == ")":
             self.tokenType = "RPAREN"
             self.nextTokenExpected = ["BINARY_OPERATOR", "RPAREN", "END"]
-        elif self.token == "<":
+        elif self.char == "<":
             self.tokenType = "START"
             self.nextTokenExpected = ["VARIABLE", "LPAREN", "UNARY_OPERATOR"]
-        elif self.token == ">":
+        elif self.char == ">":
             self.tokenType = "END"
             self.nextTokenExpected = [None]
 
@@ -34,7 +29,7 @@ class TokenData():
         return self.tokenType
 
     def tokenChar(self):
-        return self.token
+        return self.char
 
     def expected(self):
         return self.nextTokenExpected
@@ -42,7 +37,7 @@ class TokenData():
 
 # Tokeniser
 def tokeniser(exp:str):
-    cleanExp = ("<" + exp +  ">").strip().upper().replace(" ", "")
+    cleanExp = ("<" + exp + ">").strip().upper().replace(" ", "")
 
     global tokens
     tokens = []
@@ -65,7 +60,7 @@ def tokeniser(exp:str):
 
 
 # Syntax validator
-def synataxValidator(exp:str):
+def syntaxValidator(exp:str):
     data = tokeniser(exp)
     size = len(tokens) - 1
     expectation = ["VARIABLE", "LPAREN", "UNARY_OPERATOR"]
@@ -93,3 +88,5 @@ def synataxValidator(exp:str):
         print("Unclosed parantheses found")
     elif depth < 0:
         print("Closed an unopened parantheses")
+
+    return tokens
